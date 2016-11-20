@@ -16,18 +16,9 @@ io.on('connection', (socket) => {
   socket.emit('newMessage', generateMessage('admin', 'welcome to the chat app'));
   socket.broadcast.emit('newMessage', generateMessage('admin', 'new user joined'));
 
-  // socket.emit from admin, text: welcome to chat app
-  // socket.broadcast.emit from admin, text: new user joined
-
-  socket.on('createMessage', (msg) => {
+  socket.on('createMessage', (msg, callback) => {
     io.emit('newMessage', generateMessage(msg.from, msg.text));
-
-    // socket.broadcast.emit('newMessage', {
-    //   from: msg.from,
-    //   text: msg.text,
-    //   createdAt: new Date().getTime()
-    // });
-
+    callback('this is from the server');
   });
 
   socket.on('disconnect', () => {
